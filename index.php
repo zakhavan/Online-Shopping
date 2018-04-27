@@ -2,7 +2,7 @@
 
 // Initialize the session
 
-session_start();
+include 'header.php';
 
  
 
@@ -18,5 +18,6 @@ if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
 
 ?>
  
+
  
  <a href="/CS564/logout.php">logout</a> 

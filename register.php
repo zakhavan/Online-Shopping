@@ -1,6 +1,12 @@
 <?php
 $msg = "";
 require_once 'Includes/connection.php';
+include 'header.php';
+
+if(isset($_SESSION['username'])){
+            header("location: profile.php?msg=Please logout to register!");
+
+}
 $hasError = false;
 
     if($_SERVER['REQUEST_METHOD'] =='POST'){
@@ -84,44 +90,6 @@ $hasError = false;
 
 
 
-/*if(!empty($_POST['username']) && !empty($_POST['password']))
-{
-    $user = $_POST['username'];
-    $pass=  $_POST['password'];
-    $stmt = $conn->prepare("SELECT Username,Role FROM Users WHERE Username = ? AND Password= ?");
-    $stmt->bind_param("ss", $user, $pass);
-
-    // set parameters and execute
-
-    $stmt->execute();
-
-    $result = $stmt->get_result();
-    if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-            //CREATE A SESSION
-            //REDIRECT
-            session_start();
-            $_SESSION['username'] = $user;
-            $_SESSION['password'] = $pass;
-            $_SESSION['role'] = $row["Role"];
-
-            if($row["Role"] == "Shopper") {
-            header("location: index.php");
-            }
-            else {
-                header("location: admin.php");
-            }
-            
-        }
-        
-    } else {
-            echo "Incorrect username or password. Please try again!";
-    }
-
-
-}
-*/
-//print_r($_POST);
 
 ?>
 

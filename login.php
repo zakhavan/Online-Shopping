@@ -1,5 +1,15 @@
 <?php
 require_once 'Includes/connection.php';
+include 'header.php';
+
+if(isset($_SESSION['username'])){
+            header("location: profile.php?msg=Please logout to login again!");
+
+}
+
+
+
+
 $msg="";
 if(!empty($_GET['msg']) )
 {
