@@ -20,7 +20,7 @@ if($_SERVER['REQUEST_METHOD'] =='POST'){
         $stmt->execute();
         
         $result = $stmt->get_result();
-        print_r($result,true);
+        
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $quantity = $row['Quantity']+1;
@@ -79,6 +79,7 @@ $total =0;
 	$cartView.="</table>";
 	$cartView.="Total cart value is $" .$total;
 	$cartView.= "<form action='/CS564/transaction.php' method='post'><input name='total' type='hidden' value='". $total . "' disabled/>";
+	
         $cartView .="<button type='submit' name ='checkout' value='checkout'> Checkout </button>";
 
 ?>

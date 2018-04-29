@@ -105,8 +105,8 @@ if($_SERVER['REQUEST_METHOD'] =='POST'){
   <input type="text" name="phone" value="<?php echo $row['Phone']?>" ><br>
   Gender :<select name="gender" > 
     <option value=" "> EMPTY </option> 
-    <option value="M" selected="<?php if ($row['Gender'] ='M'){echo 'selected'; } ?>">Male</option> 
-    <option value="F" selected="<?php if ($row['Gender'] ='F'){echo 'selected'; } ?>">Female</option> 
+    <option value="M" selected="<?php if ($row['Gender'] =='M'){echo 'selected'; } ?>">Male</option> 
+    <option value="F" selected="<?php if ($row['Gender'] =='F'){echo 'selected'; } ?>">Female</option> 
 </select> <br>
   BirthDate:
    <input type="date" name="birthdate" value="<?php echo $row['BirthDate']?>" ><br>

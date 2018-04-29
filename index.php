@@ -87,9 +87,15 @@ if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
 		$productsView .= "<tr><td><a href='/CS564/product.php?id=".$row['ProductID']."'>".$row['ProductName']."</a></td> ";
 		$productsView .= "<td>".$row['ProductType']."</td> ";
-		$productsView .= "<td>".$row['Stock']."</td> ";
+		$productsView .= "<td>";
+		if($row['Stock'] > 0){
+                    $productsView .=$row['Stock'];
+		}else{
+		$productsView .="Out of Stock!";
+		}
+		$productsView.="</td> ";
 		$productsView .= "<td>".$row['Price']."</td> ";
-		$productsView .= "<td><button type='submit' name='add' value=".$row['ProductID'].">Buy</button></th></tr> ";
+		$productsView .= "<td><button type='submit' name='add' value=".$row['ProductID']." ". ($row['Stock'] >0 ? " " : "disabled" ) . ">Buy</button></th></tr> ";
 	}
 	$productsView .= "</form></table>";
 	for ($i=0;$i < $numPages; $i++) {
