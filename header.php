@@ -18,7 +18,7 @@ if(isset($_SESSION['username'])){
 }else{
 
       $htmlString .= ' <a href="/CS564/login.php">Login</a>  ';
-      $htmlString .= ' <a href="/CS564/login.php">Register</a>  ';
+      $htmlString .= ' <a href="/CS564/register.php">Register</a>';
 
 
 }
