@@ -2,17 +2,31 @@
 
 require_once 'Includes/connection.php';
 include 'header.php';
+if(!isset($_SESSION['username']) || empty($_SESSION['username']) ){
 
+  header("location: login.php");
+
+  exit;
+
+}
 
 $msg="";
- 
+$msg2="";
  if(!empty($_GET['msg']) )
 {
 $msg = $_GET['msg'];
 }
 $orderId = null;
+$hasError = false;
 if($_SERVER['REQUEST_METHOD'] =='POST'){
+
+    $conn->autocommit(FALSE);
+
+
     if(isset( $_POST['checkout'] )) {
+    
+    $conn->begin_transaction(MYSQLI_TRANS_START_READ_ONLY);
+    
      $stmt = $conn->prepare("SELECT p.ProductID,c.Quantity,(SELECT SUM(pp.Price * cc.Quantity) FROM Carts AS cc LEFT JOIN Products AS pp on cc.product_id=pp.ProductID WHERE cc.member_id=? GROUP BY member_id) as total FROM Carts AS c LEFT JOIN Products AS p on c.product_id=p.ProductID WHERE c.member_id=?");
      $stmt->bind_param("ii", $_SESSION['memberID'], $_SESSION['memberID']);
      $stmt->execute();
@@ -24,17 +38,18 @@ if($_SERVER['REQUEST_METHOD'] =='POST'){
             $stmt = $conn->prepare("INSERT INTO Orders(customer_id,address_id,Date_Time,TotalCost,Status) VALUES(?,?,NOW(),?,'Placed')");
             $stmt->bind_param("iii",$_SESSION['memberID'], $_POST['address'],$row['total']);
             if($stmt->execute()){
-            $msg.= "Order created sucessfully!";
+            $msg2= "Order created sucessfully!";
             $orderId = $stmt->insert_id;
             }
             else{
+                $hasError = true;
                 $msg.= "Failed!!";
             }
         }
         
         
         //  decrement Product quantity
-        $stmt = $conn->prepare("SELECT Stock FROM Products WHERE ProductID = ?");
+        $stmt = $conn->prepare("SELECT Stock,ProductName FROM Products WHERE ProductID = ?");
         $stmt->bind_param("i", $row['ProductID']);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -53,18 +68,40 @@ if($_SERVER['REQUEST_METHOD'] =='POST'){
             }
         
         }else{
+           $hasError = true;
+           $msg .= "The Product  ".$row2['ProductName'];
+           if($row2['Stock']==0){
+            $msg .= " out of stock!";
+
+           }else
+           {
            
-           $msg.= "A Product with ".$row['ProductID']."is out of stock!"; 
+           $msg .= "has only".$row2['Stock']." quantity left";
+           }
         }
         
     }
-            $stmt = $conn->prepare("DELETE FROM Carts WHERE member_id=?");
-            $stmt->bind_param("i", $_SESSION['memberID'] );
-           $stmt->execute();
+    if($hasError == true){
+    
+    $conn->rollback();
+        header("location: cart.php?msg=$msg");
+    }
+    else{
+    
+    $stmt = $conn->prepare("DELETE FROM Carts WHERE member_id=?");
+    $stmt->bind_param("i", $_SESSION['memberID'] );
+    $stmt->execute();
+    $conn->commit();
+            header("location: order.php?msg=$msg2");
+
+         }  
     
     
     
     }
+    
+    $conn->close();
+
 }
 
-
+?>
