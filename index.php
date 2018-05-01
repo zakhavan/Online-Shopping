@@ -80,8 +80,8 @@ $offset = ($page-1) * $numItems;
 $orderBy = "Price";
 $stmt =null;
 if(strlen($search) >1  ){
-  $stmt = $conn->prepare("SELECT count(*) AS numProducts FROM Products WHERE ProductType LIKE ? OR Description LIKE ? OR ProductName LIKE ?");
-  $stmt->bind_param("sss", $search,$search,$search);
+  $stmt = $conn->prepare("SELECT count(*) AS numProducts FROM Products WHERE ProductType LIKE ? OR ProductName LIKE ?");
+  $stmt->bind_param("ss",$search,$search);
 }else{
     $stmt= $conn->prepare("SELECT count(*) AS numProducts FROM Products");
 }
@@ -95,8 +95,8 @@ while ($row = $result->fetch_assoc()) {
 $numPages = ceil($maxProducts / $numItems);
 
 if(strlen($search) > 0){
-  $stmt = $conn->prepare("SELECT * FROM Products WHERE ProductType LIKE ? OR Description LIKE ? OR ProductName LIKE ? ORDER BY ? LIMIT ? OFFSET ?");
-  $stmt->bind_param("ssssii",$search,$search,$search, $orderBy, $numItems, $offset);
+  $stmt = $conn->prepare("SELECT * FROM Products WHERE ProductType LIKE ? OR ProductName LIKE ? ORDER BY ? LIMIT ? OFFSET ?");
+  $stmt->bind_param("sssii",$search,$search, $orderBy, $numItems, $offset);
 
 }else{
   $stmt = $conn->prepare("SELECT * FROM Products ORDER BY ? LIMIT ? OFFSET ?");
