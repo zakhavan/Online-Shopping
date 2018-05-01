@@ -42,7 +42,7 @@ if (!empty($_POST['username']) && !empty($_POST['password'])) {
             }
         }
     } else {
-        echo "Incorrect username or password. Please try again!";
+            echo "Incorrect Username or Password. Please try again!";
     }
 }
 
