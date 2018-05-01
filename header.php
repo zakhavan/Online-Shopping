@@ -18,13 +18,22 @@ if (isset($_SESSION['username'])) {
     $htmlString .= ' <a style="background-color:#98AFC7;padding:5px 10px 5px 10px" href="/CS564/cart.php">Cart</a> </div> ';
 
     $htmlString .= '<div style="background-color:#BCC6CC;float: right;overflow: hidden;padding: 50px"> <a style="background-color:#98AFC7;padding:5px 10px 5px 10px" href="/CS564/logout.php">Logout</a></div>  ';
-    $htmlString .= '<div style="background-color:#E5E4E2;float: none;padding: 50px; text-align: center;">Logged in as '. $_SESSION["username"]."</div>";
+    $htmlString .= '<div style="background-color:#E5E4E2;float: none;padding: 50px; text-align: center;">Logged in as '. $_SESSION["username"].' <form action="/CS564/index.php" method="GET">
+    <input id="search" name="search" type="text" placeholder="Type here">
+    <input id="submit" type="submit" value="Search">
+    </form> </div>';
 } else {
-  $htmlString = '<div style="background-color:#BCC6CC;float: left;padding: 50px"> <a style="background-color:#98AFC7;padding:5px 10px 5px 10px" href="/CS564/index.php">Home</a> </div>';
-
+    $htmlString = '<div style="background-color:#BCC6CC;float: left;padding: 50px"> <a style="background-color:#98AFC7;padding:5px 10px 5px 10px" href="/CS564/index.php">Home</a> </div>';
     $htmlString .= '<div style="background-color:#BCC6CC;float: right;overflow: hidden;padding: 50px"> <a style="background-color:#98AFC7;padding:5px 10px 5px 10px" href="/CS564/login.php">Login</a>  ';
     $htmlString .= ' <a style="background-color:#98AFC7;padding:5px 10px 5px 10px" href="/CS564/register.php">Register</a></div>';
-    $htmlString .= '<div style="background-color:#E5E4E2;float: none;padding: 50px; text-align: center;">Welcome</div>';
+    $htmlString .= '<div style="background-color:#E5E4E2;float: none;padding: 50px; text-align: center;">
+
+    <form action="/CS564/index.php" method="GET">
+    <input id="search" name="search" type="text" placeholder="Type here">
+    <input id="submit" type="submit" value="Search">
+    </form>
+
+    </div>';
 
 }
 

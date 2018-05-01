@@ -51,7 +51,11 @@ $page=1;
 if (!empty($_GET['page'])) {
     $page = $_GET['page'];
 }
-
+$search="";
+if (!empty($_GET['search'])) {
+  $msg .= "Showing search results for : ".$_GET['search'];
+  $search = "%".$_GET['search']."%";
+}
 
 /*
 // If session variable is not set it will redirect to login page
@@ -74,9 +78,15 @@ if (isset($_SESSION["role"]) && $_SESSION["role"] == "Admin") {
 $numItems = 10;
 $offset = ($page-1) * $numItems;
 $orderBy = "Price";
-$stmt = $conn->prepare("SELECT count(*) AS numProducts FROM Products");
+$stmt =null;
+if(strlen($search) >1  ){
+  $stmt = $conn->prepare("SELECT count(*) AS numProducts FROM Products WHERE ProductType LIKE ? OR Description LIKE ? OR ProductName LIKE ?");
+  $stmt->bind_param("sss", $search,$search,$search);
+}else{
+    $stmt= $conn->prepare("SELECT count(*) AS numProducts FROM Products");
+}
 $stmt->execute();
-$result = $stmt->get_result();
+$result = $stmt->get_result() ;
 $maxProducts = 0;
 while ($row = $result->fetch_assoc()) {
     $maxProducts =$row['numProducts'];
@@ -84,8 +94,14 @@ while ($row = $result->fetch_assoc()) {
 
 $numPages = ceil($maxProducts / $numItems);
 
-$stmt = $conn->prepare("SELECT * FROM Products ORDER BY ? LIMIT ? OFFSET ?");
-$stmt->bind_param("sii", $orderBy, $numItems, $offset);
+if(strlen($search) > 0){
+  $stmt = $conn->prepare("SELECT * FROM Products WHERE ProductType LIKE ? OR Description LIKE ? OR ProductName LIKE ? ORDER BY ? LIMIT ? OFFSET ?");
+  $stmt->bind_param("ssssii",$search,$search,$search, $orderBy, $numItems, $offset);
+
+}else{
+  $stmt = $conn->prepare("SELECT * FROM Products ORDER BY ? LIMIT ? OFFSET ?");
+  $stmt->bind_param("sii", $orderBy, $numItems, $offset);
+}
 
 // set parameters and execute
 $productsView ="";
@@ -116,7 +132,11 @@ if ($result->num_rows > 0) {
     $productsView .= "</form></table>";
     for ($i=0;$i < $numPages; $i++) {
         $p = $i+1;
-        $productsView.="<a href='/CS564/index.php?page=$p'> $p</a>";
+        if(strlen($search) > 0){
+          $productsView.="<a href='/CS564/index.php?page=$p&search=".$_GET['search']."'> $p</a>";
+        }else{
+          $productsView.="<a href='/CS564/index.php?page=$p'> $p</a>";
+        }
     }
 }
 
