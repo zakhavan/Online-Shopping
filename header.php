@@ -13,7 +13,9 @@ if(isset($_SESSION['username'])){
 
   $htmlString .= ' <a href="/CS564/profile.php">Profile</a>  ';
   $htmlString .= ' <a href="/CS564/cart.php">Cart</a>  ';
+   $htmlString .= ' <a href="/CS564/order.php">Order</a>  ';
   $htmlString .= ' <a href="/CS564/logout.php">Logout</a>  ';
+  
 
 }else{
 
