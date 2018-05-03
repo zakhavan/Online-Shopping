@@ -61,7 +61,9 @@ if (isset($_SESSION["role"]) && $_SESSION["role"] == "Admin") {
 // query database for products
 $numItems = 10;
 $offset = ($page-1) * $numItems;
-$orderBy = "Price";
+$orderBy = "ProductID";
+
+
 $stmt =null;
 if(strlen($search) >1  ){
   $stmt = $conn->prepare("SELECT count(*) AS numProducts FROM Products WHERE ProductType LIKE ? OR ProductName LIKE ?");
@@ -151,7 +153,7 @@ if ($result->num_rows > 0) {
         if(strlen($search) > 0){
           $productsView.="<a href='/CS564/index.php?page=$next&search=".$_GET['search']."'> > </a>";
         }else{
-          $productsView.="<a href='/CS564/index.php?page=$next> next </a>";
+          $productsView.="<a href='/CS564/index.php?page=$next'> > </a>";
         }
     }
     if($nextnext > $page){
