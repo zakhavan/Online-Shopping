@@ -207,7 +207,7 @@ $reviewView .= "<form action='/CS564/product.php?id=".$_GET['id']."' method='pos
     echo 'selected';
 } ?>>5</option>
 </select>
-<input type="submit" name = "rate" value="Rate"   <?php if (!isset($_SESSION[''])) {
+<input type="submit" name = "rate" value="Rate"   <?php if (!isset($_SESSION['username'])) {
 echo 'disabled';
 } ?>   >
 
@@ -217,7 +217,7 @@ Review:
 <form action="/CS564/product.php?id=<?php echo $productID;?>" method="post" id = 'reviewForm'>
 <textarea name = 'review'> <?php echo $reviewVal;?> </textarea>
 
-  <input type="submit" name="submitReview" value="Submit"  <?php if (!isset($_SESSION[''])) {
+  <input type="submit" name="submitReview" value="Submit"  <?php if (!isset($_SESSION['username'])) {
   echo 'disabled';
 } ?>  >
 </form>
