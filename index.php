@@ -122,15 +122,15 @@ if ($result->num_rows > 0) {
       if(strlen($search) > 0){
         $productsView.="<a href='/CS564/index.php?page=$prevprev&search=".$_GET['search']."'> << </a>";
       }else{
-        $productsView.="<a href='/CS564/index.php?page=$prevprev'> prevprev </a>";
+        $productsView.="<a href='/CS564/index.php?page=$prevprev'> <<  </a>";
       }
     }
     if($page!=1){
       $prev = $page-1;
       if(strlen($search) > 0){
-        $productsView.="<a href='/CS564/index.php?page=$prev&search=".$_GET['search']."'> prev </a>";
+        $productsView.="<a href='/CS564/index.php?page=$prev&search=".$_GET['search']."'> < </a>";
       }else{
-        $productsView.="<a href='/CS564/index.php?page=$prev'> prev </a>";
+        $productsView.="<a href='/CS564/index.php?page=$prev'> < </a>";
       }
     }
     $startList = $pageSet*10;
@@ -149,14 +149,14 @@ if ($result->num_rows > 0) {
     if($numPages > $page){
         $next = $page+1;
         if(strlen($search) > 0){
-          $productsView.="<a href='/CS564/index.php?page=$next&search=".$_GET['search']."'> next </a>";
+          $productsView.="<a href='/CS564/index.php?page=$next&search=".$_GET['search']."'> > </a>";
         }else{
           $productsView.="<a href='/CS564/index.php?page=$next> next </a>";
         }
     }
     if($nextnext > $page){
       if(strlen($search) > 0){
-        $productsView.="<a href='/CS564/index.php?page=$nextnext&search=".$_GET['search']."'> NN </a>";
+        $productsView.="<a href='/CS564/index.php?page=$nextnext&search=".$_GET['search']."'> >> </a>";
       }else{
         $productsView.="<a href='/CS564/index.php?page=$nextnext'> >> </a>";
       }

@@ -50,6 +50,8 @@ if( isset(  $_POST['submit'])){
 
           }
         }else{
+          $stmt = $conn->prepare("INSERT INTO Addresses(customer_id,Address) VALUES(?,?)");
+          $stmt->bind_param("is", $id, $_POST['Address']);
           if($stmt->execute())
           {
             $stmt = $conn->prepare("INSERT INTO Addresses(customer_id,Address) VALUES(?,?)");
