@@ -1,10 +1,3 @@
-<html>
-<head>
-<title>Product Name </title>
-
-</head>
-
-
 <?php
 // Initialize the session
 

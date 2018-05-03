@@ -1,10 +1,3 @@
-<html>
-<head>
-<title>Product Name </title>
-
-</head>
-
-
 <?php
 // Initialize the session
 
@@ -170,8 +163,6 @@ $reviewView .= "<form action='/CS564/product.php?id=".$_GET['id']."' method='pos
 
 ?>
 
-
-<body>
 
 <?php if (strlen($msg)>0) {
     echo $msg;

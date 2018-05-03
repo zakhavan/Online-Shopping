@@ -1,22 +1,3 @@
-<html>
-
-<head>
-
-
-<style>
-table, th, td {
-   border: 1px solid black;
-}
-
-</style>
-
-</head>
-
-
-
-
-
-<body>
 
 <?php
 
@@ -51,6 +32,7 @@ $page=1;
 if (!empty($_GET['page'])) {
     $page = $_GET['page'];
 }
+$pageSet =floor($page/10);
 $search="";
 if (!empty($_GET['search'])) {
   $msg .= "Showing search results for : ".$_GET['search'];
@@ -72,6 +54,8 @@ $isAdmin = false;
 if (isset($_SESSION["role"]) && $_SESSION["role"] == "Admin") {
     $isAdmin =true;
 }
+
+
 
 
 // query database for products
@@ -130,14 +114,54 @@ if ($result->num_rows > 0) {
         $productsView .= "</tr>";
     }
     $productsView .= "</form></table>";
-    for ($i=0;$i < $numPages; $i++) {
+
+
+    $nextnext = (($pageSet+1)*10)+1;
+    $prevprev = (($pageSet)*10)-1;
+    if($prevprev >0){
+      if(strlen($search) > 0){
+        $productsView.="<a href='/CS564/index.php?page=$prevprev&search=".$_GET['search']."'> << </a>";
+      }else{
+        $productsView.="<a href='/CS564/index.php?page=$prevprev'> prevprev </a>";
+      }
+    }
+    if($page!=1){
+      $prev = $page-1;
+      if(strlen($search) > 0){
+        $productsView.="<a href='/CS564/index.php?page=$prev&search=".$_GET['search']."'> prev </a>";
+      }else{
+        $productsView.="<a href='/CS564/index.php?page=$prev'> prev </a>";
+      }
+    }
+    $startList = $pageSet*10;
+    for ($i=$startList;$i < $nextnext; $i++) {
         $p = $i+1;
+        if($page !=$p){
         if(strlen($search) > 0){
           $productsView.="<a href='/CS564/index.php?page=$p&search=".$_GET['search']."'> $p</a>";
         }else{
           $productsView.="<a href='/CS564/index.php?page=$p'> $p</a>";
         }
+      }else{
+        $productsView.="$p";
+      }
     }
+    if($numPages > $page){
+        $next = $page+1;
+        if(strlen($search) > 0){
+          $productsView.="<a href='/CS564/index.php?page=$next&search=".$_GET['search']."'> next </a>";
+        }else{
+          $productsView.="<a href='/CS564/index.php?page=$next> next </a>";
+        }
+    }
+    if($nextnext > $page){
+      if(strlen($search) > 0){
+        $productsView.="<a href='/CS564/index.php?page=$nextnext&search=".$_GET['search']."'> NN </a>";
+      }else{
+        $productsView.="<a href='/CS564/index.php?page=$nextnext'> >> </a>";
+      }
+    }
+
 }
 
 echo $msg;

@@ -1,3 +1,49 @@
+<html>
+
+<head>
+
+
+<style>
+table, th, td {
+   border: 1px solid black;
+}
+a{
+  margin: 2px 2px 2px 2px;
+}
+a:link    {
+  /* Applies to all unvisited links */
+  text-decoration:  none;
+  font-weight:      bold;
+  color:            blue;
+  }
+a:visited {
+  /* Applies to all visited links */
+  text-decoration:  none;
+  font-weight:      bold;
+  color:            blue;
+  }
+a:hover   {
+  /* Applies to links under the pointer */
+  text-decoration:  underline;
+  font-weight:      bold;
+  }
+a:active  {
+  /* Applies to activated links */
+  text-decoration:  underline;
+  font-weight:      bold;
+  color: black;
+  }
+</style>
+
+</head>
+
+
+
+
+
+<body>
+
+
 <?php
 
 // Initialize the session

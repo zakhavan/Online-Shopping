@@ -105,11 +105,7 @@ $total =0;
 <?php if (strlen($msg)>0) {
     echo $msg;
 }?>
-<html>
-<head>
-</head>
 
-<body>
 
 <?php  echo $cartView;
 ?>
