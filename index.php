@@ -71,9 +71,9 @@ if(strlen($search) >1  ){
     $stmt= $conn->prepare("SELECT count(*) AS numProducts FROM Products");
 }
 $stmt->execute();
-$result = $stmt->get_result() ;
+$stmt->store_result();
 $maxProducts = 0;
-while ($row = $result->fetch_assoc()) {
+while ($row = fetchAssocStatement($stmt)) {
     $maxProducts =$row['numProducts'];
 }
 
@@ -91,12 +91,12 @@ if(strlen($search) > 0){
 // set parameters and execute
 $productsView ="";
 $stmt->execute();
-$result = $stmt->get_result();
-if ($result->num_rows > 0) {
+$stmt->store_result();
+if ($stmt->num_rows > 0) {
     $productsView .= "<table><tr>   <th>ProductName</th>   <th>Category</th>  <th>Stock</th> <th>Price</th> <th>Action</th></tr>";
     $productsView .= "<form action='$site_root/cart.php' method='post'>";
 
-    while ($row = $result->fetch_assoc()) {
+    while ($row = fetchAssocStatement($stmt)) {
         $productsView .= "<tr><td><a href='$site_root/product.php?id=".$row['ProductID']."'>".$row['ProductName']."</a></td> ";
         $productsView .= "<td>".$row['ProductType']."</td> ";
         $productsView .= "<td>";

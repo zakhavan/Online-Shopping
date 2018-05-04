@@ -22,10 +22,10 @@ if ($_SERVER['REQUEST_METHOD'] =='POST') {
         $stmt->bind_param("ii", $_POST['add'], $_SESSION['memberID']);
         $stmt->execute();
 
-        $result = $stmt->get_result();
+        $stmt->store_result();
 
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
+        if ($stmt->num_rows > 0) {
+            $row = fetchAssocStatement($stmt);
             $quantity = $row['Quantity']+1;
             $stmt = $conn->prepare("UPDATE Carts SET Quantity = ? WHERE product_id = ? AND member_id = ?");
             $stmt->bind_param("iii", $quantity, $_POST['add'], $_SESSION['memberID']);
@@ -58,20 +58,20 @@ if ($_SERVER['REQUEST_METHOD'] =='POST') {
 $stmt = $conn->prepare("SELECT  * FROM Addresses WHERE customer_id = ?");
 $stmt->bind_param("i", $_SESSION['memberID']);
 $stmt->execute();
-$result = $stmt->get_result();
+$stmt->store_result();
 $addresses = [];
-while ($row = $result->fetch_assoc()) {
+while ($row = fetchAssocStatement($stmt)) {
     $addresses[$row['AddressID']] = $row['Address'];
 }
 
 $stmt = $conn->prepare("SELECT p.ProductID,p.ProductName,p.Price,c.Quantity,(p.Price * c.Quantity) AS total_price,(SELECT SUM(pp.Price * cc.Quantity) FROM Carts AS cc LEFT JOIN Products AS pp on cc.product_id=pp.ProductID WHERE cc.member_id=? GROUP BY member_id) as total FROM Carts AS c LEFT JOIN Products AS p on c.product_id=p.ProductID WHERE c.member_id=?");
 $stmt->bind_param("ii", $_SESSION['memberID'], $_SESSION['memberID']);
 $stmt->execute();
- $result = $stmt->get_result();
+ $stmt->store_result();
  $cartView= "<table><tr>   <th>ProductName</th>   <th>Quantity</th>  <th>Unit Price</th> <th>Total Price</th> </tr>";
 $cartView .= "<form action='$site_root/cart.php' method='post'>";
 $total =0;
-  while ($row = $result->fetch_assoc()) {
+  while ($row = fetchAssocStatement($stmt)) {
       $cartView .= "<tr><td>".$row['ProductName']."</td> ";
       $cartView .= "<td>".$row['Quantity']."</td> ";
       $cartView .= "<td>".$row['Price']."</td> ";

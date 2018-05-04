@@ -55,7 +55,7 @@ if (!empty($_POST['action'])) {
 $stmt = $conn->prepare("SELECT * FROM Orders WHERE Status Like ?");
 $stmt->bind_param("s", $status);
 $stmt->execute();
-$result = $stmt->get_result();
+$stmt->store_result();
 $orderView="";
 $orderView .= "<form action='$site_root/manage_orders.php' method='post'>";
 $orderView .="<td><button type='submit'  name='status' value='%' >Show All</button></th>";
@@ -64,10 +64,10 @@ $orderView .="<td><button type='submit'  name='status' value='Canceled'>Show Can
 $orderView .="<td><button type='submit'  name='status' value='Confirmed'>Show Confirmed</button></th>";
 $orderView .="<td><button type='submit'  name='status' value='Shipped'>Show Shipped</button></th>";
 $orderView .="<td><button type='submit'  name='status' value='Delivered'>Show Delivered</button></th></form>";
-if ($result->num_rows > 0) {
+if ($stmt->num_rows > 0) {
     $orderView .= "<table><tr>   <th>Order ID</th>    <th>Time</th>  <th>Total</th>  <th>Status</th> </tr>";
 
-    while ($row = $result->fetch_assoc()) {
+    while ($row = fetchAssocStatement($stmt)) {
         $orderView .= "<tr><td><a href='$site_root/orderView.php?id=".$row['OrderID']."'>".$row['OrderID']."</a></td> ";
         $orderView .= "<td>".$row['Date_Time']."</td> ";
         $orderView .= "<td>".$row['TotalCost']."</td> ";

@@ -22,8 +22,8 @@ if( isset(  $_GET['addrId'])){
     $stmt->bind_param("ii",  $_GET['addrId'],$user);
 
     if($stmt->execute()){
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
+        $stmt->store_result();
+        $row = fetchAssocStatement($stmt)
                 print_r($row,true);
 
         $addr = $row['Address'];

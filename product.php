@@ -39,9 +39,9 @@ if ($_SERVER['REQUEST_METHOD'] =='POST') {
             $stmt =$conn->prepare("SELECT * FROM Reviews WHERE member_id = ? AND product_id = ? ");
             $stmt->bind_param("ii", $_SESSION['memberID'], $productID);
             $stmt->execute();
-            $result = $stmt->get_result();
+            $stmt->store_result();
 
-            if ($result->num_rows > 0) {
+            if ($stmt->num_rows > 0) {
                 $stmt = $conn->prepare("UPDATE Reviews SET Message =? WHERE member_id = ? AND product_id = ?");
                 $stmt->bind_param("sii", $review, $_SESSION['memberID'], $productID);
                 if ($stmt->execute()) {
@@ -66,9 +66,9 @@ if ($_SERVER['REQUEST_METHOD'] =='POST') {
         $stmt =$conn->prepare("SELECT * FROM Ratings WHERE member_id = ? AND product_id = ? ");
         $stmt->bind_param("ii", $_SESSION['memberID'], $productID);
         $stmt->execute();
-        $result = $stmt->get_result();
+        $stmt->store_result();
 
-        if ($result->num_rows > 0) {
+        if ($stmt->num_rows > 0) {
             $stmt = $conn->prepare("UPDATE Ratings SET Value =? WHERE member_id = ? AND product_id = ?");
             $stmt->bind_param("sii", $_POST['rating'], $_SESSION['memberID'], $productID);
             if ($stmt->execute()) {
@@ -93,10 +93,10 @@ if ($_SERVER['REQUEST_METHOD'] =='POST') {
 $stmt = $conn->prepare("SELECT p.ProductID,p.ProductName,p.ProductType,p.Description,p.Stock,p.Price,s.SupplierID,s.SupplierName,s.Phone,(SELECT AVG(Value) FROM Ratings as rr WHERE rr.product_id = ? GROUP BY rr.product_id) as avg_rating FROM Products AS p JOIN Suppliers AS s ON p.supplier_id = s.SupplierID WHERE ProductID = ?");
 $stmt->bind_param("ii", $productID, $productID);
 $stmt->execute();
-$result = $stmt->get_result();
+$stmt->store_result();
 $productView="";
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
+if ($stmt->num_rows > 0) {
+    $row = fetchAssocStatement($stmt);
     $productView .= " <table> <tr><td>Product ID </td> <td>".$row['ProductID']."</td></tr>";
     $productView .= "<tr><td>Product Name </td> <td>".$row['ProductName']."</td></tr>";
     $productView .= "<tr><td>Category </td> <td>".$row['ProductType']."</td></tr>";
@@ -121,11 +121,11 @@ if ($result->num_rows > 0) {
 $stmt = $conn->prepare("SELECT u.Username,r.Message,r.product_id,r.member_id FROM Reviews AS r JOIN Users AS u ON r.member_id = u.MemberID WHERE product_id = ?");
 $stmt->bind_param("i", $productID);
 $stmt->execute();
-$result = $stmt->get_result();
+$stmt->store_result();
 $reviewView = "<h1> Reviews</h3>";
 $reviewView .= "<form action='$site_root/product.php?id=".$_GET['id']."' method='post'>";
 
- while ($row = $result->fetch_assoc()) {
+ while ($row = fetchAssocStatement($stmt)) {
      $reviewView .= "<h3> Reviewer: ".$row['Username']." </h3>";
      $reviewView .= "<p> " .$row['Message'] . "</p>";
      if($_SESSION['role'] =='Admin'){
@@ -139,10 +139,10 @@ $reviewView .= "<form action='$site_root/product.php?id=".$_GET['id']."' method=
     $stmt = $conn->prepare("SELECT * FROM Ratings WHERE member_id = ? AND product_id = ? ");
     $stmt->bind_param("ii", $_SESSION['memberID'], $productID);
     $stmt->execute();
-    $result = $stmt->get_result();
+    $stmt->store_result();
 
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
+    if ($stmt->num_rows > 0) {
+        $row = fetchAssocStatement($stmt);
         $ratingVal=$row['Value'];
     }
 
@@ -150,10 +150,10 @@ $reviewView .= "<form action='$site_root/product.php?id=".$_GET['id']."' method=
     $stmt = $conn->prepare("SELECT * FROM Reviews WHERE member_id = ? AND product_id = ? ");
     $stmt->bind_param("ii", $_SESSION['memberID'], $productID);
     $stmt->execute();
-    $result = $stmt->get_result();
+    $stmt->store_result();
 
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
+    if ($stmt->num_rows > 0) {
+        $row = fetchAssocStatement($stmt);
         $reviewVal=$row['Message'];
     }
 

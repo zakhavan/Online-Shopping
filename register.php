@@ -15,8 +15,8 @@ $hasError = false;
             $stmt->bind_param("s", $user);
             $stmt->execute();
 
-            $result = $stmt->get_result();
-            if ($result->num_rows > 0) {
+            $stmt->store_result();
+            if ($stmt->num_rows > 0) {
                 $msg .= "Username is already taken!<br>";
                 $hasError = true;
             }
@@ -30,8 +30,8 @@ $hasError = false;
             $stmt->bind_param("s", $email);
             $stmt->execute();
 
-            $result = $stmt->get_result();
-            if ($result->num_rows > 0) {
+            $stmt->store_result();
+            if ($stmt->num_rows > 0) {
                 $msg .= "Email is already taken!<br>";
                 $hasError = true;
             }

@@ -18,14 +18,14 @@ $msg="";
 $stmt = $conn->prepare("SELECT * FROM Orders WHERE customer_id = ?");
 $stmt->bind_param("i", $_SESSION['memberID']);
 $stmt->execute();
-$result = $stmt->get_result();
+$stmt->store_result();
 $orderView="";
 
-if ($result->num_rows > 0) {
+if ($stmt->num_rows > 0) {
     $orderView .= "<table><tr>   <th>Order ID</th>    <th>Time</th>  <th>Total</th>  <th>Status</th> </tr>";
 
 
-    while ($row = $result->fetch_assoc()) {
+    while ($row = fetchAssocStatement($stmt)) {
         $orderView .= "<tr><td><a href='$site_root/orderView.php?id=".$row['OrderID']."'>".$row['OrderID']."</a></td> ";
         $orderView .= "<td>".$row['Date_Time']."</td> ";
         $orderView .= "<td>".$row['TotalCost']."</td> ";

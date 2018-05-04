@@ -38,13 +38,13 @@ if (!empty($_GET['id'])) {
       $stmt->bind_param("i", $_GET['id']);
     }
     $stmt->execute();
-    $result = $stmt->get_result();
+    $stmt->store_result();
 
-    if ($result->num_rows > 0) {
+    if ($stmt->num_rows > 0) {
         $ordersView .= "<table><tr>   <th>Order ID</th>    <th>Time</th>   <th>Status</th> </tr>";
 
 
-        while ($row = $result->fetch_assoc()) {
+        while ($row = fetchAssocStatement($stmt)) {
             $ordersView .= "<td>".$row['OrderID']."</td> ";
             $ordersView .= "<td>".$row['Date_Time']."</td> ";
             $ordersView .= "<td>".$row['Status']."</td> </tr>";
@@ -58,12 +58,12 @@ if (!empty($_GET['id'])) {
         $stmt = $conn->prepare("SELECT Address FROM Addresses WHERE customer_id = ? AND AddressID = ?");
         $stmt->bind_param("ii", $_SESSION['memberID'], $addr);
         $stmt->execute();
-        $result = $stmt->get_result();
+        $stmt->store_result();
 
 
 
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
+        if ($stmt->num_rows > 0) {
+            $row = fetchAssocStatement($stmt);
             $ordersView .="<h1>Shipping Address</h1>";
             $ordersView .= "<p>".$row['Address']."</p> ";
         }
@@ -72,9 +72,9 @@ if (!empty($_GET['id'])) {
 
         $stmt->bind_param("i", $_GET['id']);
         $stmt->execute();
-        $result = $stmt->get_result();
+        $stmt->store_result();
         $ordersView .= "<h1>Products:</h1><table><tr>   <th>ProductName</th>   <th>Quantity</th>  <th>Unit Price</th> <th>Total Price</th> </tr>";
-        while ($row = $result->fetch_assoc()) {
+        while ($row = fetchAssocStatement($stmt)) {
             $ordersView .= "<tr><td>".$row['ProductName']."</td> ";
             $ordersView .= "<td>".$row['Quantity']."</td> ";
             $ordersView .= "<td>".$row['Price']."</td> ";

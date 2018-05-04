@@ -63,9 +63,9 @@ if ($_SERVER['REQUEST_METHOD'] =='POST') {
         $stmt = $conn->prepare("SELECT * FROM Products WHERE ProductID = ?");
         $stmt->bind_param("i", $_POST['edit']);
         $stmt->execute();
-        $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
+        $stmt->store_result();
+        if ($stmt->num_rows > 0) {
+            $row = fetchAssocStatement($stmt)
             $desciption = $row['Description'];
             $prod_name=$row['ProductName'];
             $category=$row['ProductType'];

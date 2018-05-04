@@ -21,8 +21,8 @@ $stmt = $conn->prepare("SELECT * FROM Users WHERE Username = ?");
 $stmt->bind_param("s", $user);
 $stmt->execute();
 
-$result = $stmt->get_result();
-$row = $result->fetch_assoc();
+$stmt->store_result();
+$row = fetchAssocStatement($stmt);
 
 if ($_SERVER['REQUEST_METHOD'] =='POST') {
     if (isset($_POST['update'])) {
@@ -125,8 +125,8 @@ $stmt = $conn->prepare("SELECT * FROM Addresses WHERE customer_id = ?");
 $stmt->bind_param("i", $id);
 $stmt->execute();
 
-$result = $stmt->get_result();
- while ($row = $result->fetch_assoc()) {
+$stmt->store_result();
+ while ($row = fetchAssocStatement($stmt)) {
      $addr = $row['AddressID'];
      echo "<tr><td>".$row['Address'] . "</td><td><a href ='$site_root/add_address.php?addrId=$addr'>Edit </a></td><td> <button type='submit' name='delete' value=$addr >Delete </button></td></tr>";
  }

@@ -24,9 +24,9 @@ if (!empty($_POST['username']) && !empty($_POST['password'])) {
 
     $stmt->execute();
 
-    $result = $stmt->get_result();
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
+    $stmt->store_result();
+    if ($stmt->num_rows > 0) {
+        while ($row = fetchAssocStatement($stmt)) {
             //CREATE A SESSION
             //REDIRECT
             session_start();
