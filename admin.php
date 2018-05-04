@@ -1,34 +1,27 @@
 <?php
 
-// Initialize the session
+require_once 'Includes/connection.php';
+include 'header.php';
 
-session_start();
 
- 
 
 // If session variable is not set it will redirect to login page
 
 if(!isset($_SESSION['username']) || empty($_SESSION['username']) ){
 
-  header("location: login.php");
-
+  header("location: login.php?msg=please login!");
   exit;
-
 }
 
 if($_SESSION['role'] != 'Admin') {
-echo "You are not authorized to view this page";
+  $msg = "You are not authorized to view admin page! \n";
+  header("location: profile.php?msg=$msg");
+  exit;
 }
 
-?> 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- <a href="/CS564/logout.php">logout</a> 
- 
+?>
+
+<h1> Admin Dashboard</h1>
+ <a href="<?php echo $site_root;?>/add_product.php">Add a Product</a>
+ <a href="<?php echo $site_root;?>/index.php">Manage Products</a>
+ <a href="<?php echo $site_root;?>/manage_orders.php">Manage Orders</a>

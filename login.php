@@ -1,13 +1,20 @@
 <?php
 require_once 'Includes/connection.php';
-$msg="";
-if(!empty($_GET['msg']) )
-{
-$msg = $_GET['msg'];
+include 'header.php';
+
+if (isset($_SESSION['username'])) {
+    header("location: profile.php?msg=Please logout to login again!");
 }
 
-if(!empty($_POST['username']) && !empty($_POST['password']))
-{
+
+
+
+$msg="";
+if (!empty($_GET['msg'])) {
+    $msg = $_GET['msg'];
+}
+
+if (!empty($_POST['username']) && !empty($_POST['password'])) {
     $user = $_POST['username'];
     $pass=  $_POST['password'];
     $stmt = $conn->prepare("SELECT MemberID,Role FROM Users WHERE Username = ? AND Password= ?");
@@ -19,7 +26,7 @@ if(!empty($_POST['username']) && !empty($_POST['password']))
 
     $result = $stmt->get_result();
     if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
+        while ($row = $result->fetch_assoc()) {
             //CREATE A SESSION
             //REDIRECT
             session_start();
@@ -28,20 +35,15 @@ if(!empty($_POST['username']) && !empty($_POST['password']))
 
             $_SESSION['role'] = $row["Role"];
 
-            if($row["Role"] == "Shopper") {
-            header("location: index.php");
-            }
-            else {
+            if ($row["Role"] == "Shopper") {
+                header("location: index.php");
+            } else {
                 header("location: admin.php");
             }
-            
         }
-        
     } else {
-            echo "Incorrect username or password. Please try again!";
+            echo "Incorrect Username or Password. Please try again!";
     }
-
-
 }
 
 
@@ -49,15 +51,15 @@ if(!empty($_POST['username']) && !empty($_POST['password']))
 ?>
 
 
-<?php if(strlen($msg)>0){
+<?php if (strlen($msg)>0) {
     echo $msg;
 }?>
 
 
-<form action="/CS564/login.php" method="post">
+<form action="<?php echo $site_root;?>/login.php" method="post">
   Username:<br>
   <input type="text" name="username"><br>
   Password:<br>
   <input type="password" name="password">
   <input type="submit" value="Submit">
-</form> 
+</form>
