@@ -15,7 +15,7 @@ if ($_SESSION['role'] != 'Admin') {
 }
 function printOrderAction($currStatus, $pid)
 {
-    $actionView = "<form action='/CS564/manage_orders.php' method='post'><input type='hidden' name='oid' value=$pid>";
+    $actionView = "<form action='$site_root/manage_orders.php' method='post'><input type='hidden' name='oid' value=$pid>";
     if ($currStatus =="Placed") {
         $actionView .= "<button type='submit'  name='action' value='Confirmed'>Confirm</button>";
         $actionView .= "<button type='submit'  name='action' value='Canceled'>Cancel</button>";
@@ -57,7 +57,7 @@ $stmt->bind_param("s", $status);
 $stmt->execute();
 $result = $stmt->get_result();
 $orderView="";
-$orderView .= "<form action='/CS564/manage_orders.php' method='post'>";
+$orderView .= "<form action='$site_root/manage_orders.php' method='post'>";
 $orderView .="<td><button type='submit'  name='status' value='%' >Show All</button></th>";
 $orderView .="<td><button type='submit'  name='status' value='Placed'>Show Placed</button></th>";
 $orderView .="<td><button type='submit'  name='status' value='Canceled'>Show Cancelled</button></th>";
@@ -68,7 +68,7 @@ if ($result->num_rows > 0) {
     $orderView .= "<table><tr>   <th>Order ID</th>    <th>Time</th>  <th>Total</th>  <th>Status</th> </tr>";
 
     while ($row = $result->fetch_assoc()) {
-        $orderView .= "<tr><td><a href='/CS564/orderView.php?id=".$row['OrderID']."'>".$row['OrderID']."</a></td> ";
+        $orderView .= "<tr><td><a href='$site_root/orderView.php?id=".$row['OrderID']."'>".$row['OrderID']."</a></td> ";
         $orderView .= "<td>".$row['Date_Time']."</td> ";
         $orderView .= "<td>".$row['TotalCost']."</td> ";
         $orderView .= "<td>".$row['Status']."</td> ";

@@ -2,6 +2,8 @@
 $servername = "chester.cs.unm.edu";
 $username = "zakhavan";
 $password = "IFyX1X45";
+$site_root ="/CS564";
+//$GLOBALS['a'] = 'localhost';
 
 
 $dbname = "zakhavan";

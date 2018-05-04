@@ -90,7 +90,7 @@ $supplierResult = $stmt->get_result();
 }?>
 
 
-<form action="/CS564/add_product.php" method="post">
+<form action="<?php echo $site_root;?>/add_product.php" method="post">
   Product Name:
   <input type="hidden" name="product_id" value="<?php echo $pid;?>">
   <input type="text" name="product_name" value="<?php echo $prod_name;?>"><br>

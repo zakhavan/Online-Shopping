@@ -1,9 +1,7 @@
 <?php
 
-// Initialize the session
-
-include 'header.php';
 require_once 'Includes/connection.php';
+include 'header.php';
 
 
 
@@ -24,6 +22,6 @@ if($_SESSION['role'] != 'Admin') {
 ?>
 
 <h1> Admin Dashboard</h1>
- <a href="/CS564/add_product.php">Add a Product</a>
- <a href="/CS564/index.php">Manage Products</a>
- <a href="/CS564/manage_orders.php">Manage Orders</a>
+ <a href="<?php echo $site_root;?>/add_product.php">Add a Product</a>
+ <a href="<?php echo $site_root;?>/index.php">Manage Products</a>
+ <a href="<?php echo $site_root;?>/manage_orders.php">Manage Orders</a>

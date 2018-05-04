@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] =='POST') {
 }?>
 
 
-<form action="/CS564/profile.php" method="post">
+<form action="<?php echo $site_root;?>/profile.php" method="post">
   Username:
   <input type="text" name="username" value="<?php echo $row['Username']?>" disabled><br>
   Password:
@@ -113,12 +113,12 @@ if ($_SERVER['REQUEST_METHOD'] =='POST') {
 </form>
 
 <h1> Manage Addresses</h1>
- <a href="/CS564/add_address.php">Add a new address</a>
+ <a href="<?php echo $site_root;?>/add_address.php">Add a new address</a>
 
 
 
 <table>
- <form action="/CS564/profile.php" method="post">
+ <form action="<?php echo $site_root;?>/profile.php" method="post">
  <?php
  $id = $_SESSION['memberID'];
 $stmt = $conn->prepare("SELECT * FROM Addresses WHERE customer_id = ?");
@@ -128,7 +128,7 @@ $stmt->execute();
 $result = $stmt->get_result();
  while ($row = $result->fetch_assoc()) {
      $addr = $row['AddressID'];
-     echo "<tr><td>".$row['Address'] . "</td><td><a href ='/CS564/add_address.php?addrId=$addr'>Edit </a></td><td> <button type='submit' name='delete' value=$addr >Delete </button></td></tr>";
+     echo "<tr><td>".$row['Address'] . "</td><td><a href ='$site_root/add_address.php?addrId=$addr'>Edit </a></td><td> <button type='submit' name='delete' value=$addr >Delete </button></td></tr>";
  }
 
 

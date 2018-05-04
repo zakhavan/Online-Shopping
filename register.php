@@ -91,7 +91,7 @@ $hasError = false;
 <?php if (strlen($msg)>0) {
     echo $msg;
 }?>
-<form action="/CS564/register.php" method="post">
+<form action="<?php echo $site_root;?>/register.php" method="post">
   Username:
   <input type="text" name="username"><br>
   Password:

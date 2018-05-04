@@ -26,7 +26,7 @@ if ($result->num_rows > 0) {
 
 
     while ($row = $result->fetch_assoc()) {
-        $orderView .= "<tr><td><a href='/CS564/orderView.php?id=".$row['OrderID']."'>".$row['OrderID']."</a></td> ";
+        $orderView .= "<tr><td><a href='$site_root/orderView.php?id=".$row['OrderID']."'>".$row['OrderID']."</a></td> ";
         $orderView .= "<td>".$row['Date_Time']."</td> ";
         $orderView .= "<td>".$row['TotalCost']."</td> ";
         $orderView .= "<td>".$row['Status']."</td> </tr>";

@@ -1,8 +1,7 @@
 <?php
 // Initialize the session
-
-include 'header.php';
 require_once 'Includes/connection.php';
+include 'header.php';
 
 $msg="";
 
@@ -113,7 +112,7 @@ if ($result->num_rows > 0) {
 
     $productView .= "<tr><td>Seller Name </td> <td>".$row['SupplierName']."</td></tr>";
     $productView .= "<tr><td>Seller Phone </td> <td> ".$row['Phone']."</td></tr>";
-    $productView .= "<form action='/CS564/cart.php' method='post'>";
+    $productView .= "<form action='$site_root/cart.php' method='post'>";
     $productView .= "<tr><td><button type='submit' name='add' value=".$row['ProductID']." ". ($row['Stock'] >0 ? " " : "disabled") . ">Buy</button></form></td></tr></table>";
 } else {
     $productView .="Error retriving the product!";
@@ -124,7 +123,7 @@ $stmt->bind_param("i", $productID);
 $stmt->execute();
 $result = $stmt->get_result();
 $reviewView = "<h1> Reviews</h3>";
-$reviewView .= "<form action='/CS564/product.php?id=".$_GET['id']."' method='post'>";
+$reviewView .= "<form action='$site_root/product.php?id=".$_GET['id']."' method='post'>";
 
  while ($row = $result->fetch_assoc()) {
      $reviewView .= "<h3> Reviewer: ".$row['Username']." </h3>";
@@ -177,7 +176,7 @@ $reviewView .= "<form action='/CS564/product.php?id=".$_GET['id']."' method='pos
 
 
 
-<form action="/CS564/product.php?id=<?php echo $productID;?>" method="post" id = 'ratingForm'>
+<form action="<?php echo $site_root;?>/product.php?id=<?php echo $productID;?>" method="post" id = 'ratingForm'>
  Rating :<select name="rating">
     <option value="0"  <?php if ($ratingVal =='0') {
     echo 'selected';
@@ -205,7 +204,7 @@ echo 'disabled';
 </form>
 
 Review:
-<form action="/CS564/product.php?id=<?php echo $productID;?>" method="post" id = 'reviewForm'>
+<form action="<?php echo $site_root;?>/product.php?id=<?php echo $productID;?>" method="post" id = 'reviewForm'>
 <textarea name = 'review'> <?php echo $reviewVal;?> </textarea>
 
   <input type="submit" name="submitReview" value="Submit"  <?php if (!isset($_SESSION['username'])) {

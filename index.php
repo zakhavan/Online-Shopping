@@ -2,9 +2,8 @@
 <?php
 
 // Initialize the session
-
-include 'header.php';
 require_once 'Includes/connection.php';
+include 'header.php';
 
 $msg="";
 
@@ -35,7 +34,7 @@ if (!empty($_GET['page'])) {
 $pageSet =floor($page/10);
 $search="";
 if (!empty($_GET['search'])) {
-  $msg .= "Showing search results for : ".$_GET['search'];
+  $msg .= "Showing search results for : ".$_GET['search']."<br>";
   $search = "%".$_GET['search']."%";
 }
 
@@ -95,10 +94,10 @@ $stmt->execute();
 $result = $stmt->get_result();
 if ($result->num_rows > 0) {
     $productsView .= "<table><tr>   <th>ProductName</th>   <th>Category</th>  <th>Stock</th> <th>Price</th> <th>Action</th></tr>";
-    $productsView .= "<form action='/CS564/cart.php' method='post'>";
+    $productsView .= "<form action='$site_root/cart.php' method='post'>";
 
     while ($row = $result->fetch_assoc()) {
-        $productsView .= "<tr><td><a href='/CS564/product.php?id=".$row['ProductID']."'>".$row['ProductName']."</a></td> ";
+        $productsView .= "<tr><td><a href='$site_root/product.php?id=".$row['ProductID']."'>".$row['ProductName']."</a></td> ";
         $productsView .= "<td>".$row['ProductType']."</td> ";
         $productsView .= "<td>";
         if ($row['Stock'] > 0) {
@@ -108,10 +107,10 @@ if ($result->num_rows > 0) {
         }
         $productsView.="</td> ";
         $productsView .= "<td>".$row['Price']."</td> ";
-        $productsView .= "<td><button type='submit' formaction='/CS564/cart.php' name='add' value=".$row['ProductID']." ". ($row['Stock'] >0 ? " " : "disabled") . ">Buy</button></th>";
+        $productsView .= "<td><button type='submit' formaction='$site_root/cart.php' name='add' value=".$row['ProductID']." ". ($row['Stock'] >0 ? " " : "disabled") . ">Buy</button></th>";
         if ($isAdmin ==true) {
-            $productsView .= "<td><button type='submit' formaction='/CS564/index.php?page=$page' name='remove' value=".$row['ProductID'].">Remove</button></th>";
-            $productsView .= "<td><button type='submit' formaction='/CS564/add_product.php' name='edit' value=".$row['ProductID'].">Edit</button></th>";
+            $productsView .= "<td><button type='submit' formaction='$site_root/index.php?page=$page' name='remove' value=".$row['ProductID'].">Remove</button></th>";
+            $productsView .= "<td><button type='submit' formaction='$site_root/add_product.php' name='edit' value=".$row['ProductID'].">Edit</button></th>";
         }
         $productsView .= "</tr>";
     }
@@ -122,17 +121,17 @@ if ($result->num_rows > 0) {
     $prevprev = (($pageSet)*10)-1;
     if($prevprev >0){
       if(strlen($search) > 0){
-        $productsView.="<a href='/CS564/index.php?page=$prevprev&search=".$_GET['search']."'> << </a>";
+        $productsView.="<a href='$site_root/index.php?page=$prevprev&search=".$_GET['search']."'> << </a>";
       }else{
-        $productsView.="<a href='/CS564/index.php?page=$prevprev'> <<  </a>";
+        $productsView.="<a href='$site_root/index.php?page=$prevprev'> <<  </a>";
       }
     }
     if($page!=1){
       $prev = $page-1;
       if(strlen($search) > 0){
-        $productsView.="<a href='/CS564/index.php?page=$prev&search=".$_GET['search']."'> < </a>";
+        $productsView.="<a href='$site_root/index.php?page=$prev&search=".$_GET['search']."'> < </a>";
       }else{
-        $productsView.="<a href='/CS564/index.php?page=$prev'> < </a>";
+        $productsView.="<a href='$site_root/index.php?page=$prev'> < </a>";
       }
     }
     $startList = $pageSet*10;
@@ -140,9 +139,9 @@ if ($result->num_rows > 0) {
         $p = $i+1;
         if($page !=$p){
         if(strlen($search) > 0){
-          $productsView.="<a href='/CS564/index.php?page=$p&search=".$_GET['search']."'> $p</a>";
+          $productsView.="<a href='$site_root/index.php?page=$p&search=".$_GET['search']."'> $p</a>";
         }else{
-          $productsView.="<a href='/CS564/index.php?page=$p'> $p</a>";
+          $productsView.="<a href='$site_root/index.php?page=$p'> $p</a>";
         }
       }else{
         $productsView.="$p";
@@ -151,16 +150,16 @@ if ($result->num_rows > 0) {
     if($numPages > $page){
         $next = $page+1;
         if(strlen($search) > 0){
-          $productsView.="<a href='/CS564/index.php?page=$next&search=".$_GET['search']."'> > </a>";
+          $productsView.="<a href='$site_root/index.php?page=$next&search=".$_GET['search']."'> > </a>";
         }else{
-          $productsView.="<a href='/CS564/index.php?page=$next'> > </a>";
+          $productsView.="<a href='$site_root/index.php?page=$next'> > </a>";
         }
     }
     if($nextnext > $page){
       if(strlen($search) > 0){
-        $productsView.="<a href='/CS564/index.php?page=$nextnext&search=".$_GET['search']."'> >> </a>";
+        $productsView.="<a href='$site_root/index.php?page=$nextnext&search=".$_GET['search']."'> >> </a>";
       }else{
-        $productsView.="<a href='/CS564/index.php?page=$nextnext'> >> </a>";
+        $productsView.="<a href='$site_root/index.php?page=$nextnext'> >> </a>";
       }
     }
 

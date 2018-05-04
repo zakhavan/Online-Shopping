@@ -81,7 +81,7 @@ if( isset(  $_POST['submit'])){
     echo $msg;
 }?>
 
-    <form action="/CS564/add_address.php" method="post">
+    <form action="<?php echo $site_root;?>/add_address.php" method="post">
   Address:<br>
   <?php if(isset($_GET['addrId'])) { echo "<input type='hidden' name='addrId' value='".$_GET['addrId']."''>";}?>
   <input type="text" name="Address" value="<?php echo $addr ?>"><br>

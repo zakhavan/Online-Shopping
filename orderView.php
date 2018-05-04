@@ -1,8 +1,7 @@
 <?php
 // Initialize the session
-
-include 'header.php';
 require_once 'Includes/connection.php';
+include 'header.php';
 
 $msg="";
 
@@ -84,7 +83,7 @@ if (!empty($_GET['id'])) {
 
         $ordersView .="</table>";
         $ordersView .="Total order value is $" .$total;
-        $ordersView .= "<form action='/CS564/orderView.php?id=".$_GET['id']."' method='post'><input type='hidden' name='oid' value=".$_GET['id'].">";
+        $ordersView .= "<form action='$site_root/orderView.php?id=".$_GET['id']."' method='post'><input type='hidden' name='oid' value=".$_GET['id'].">";
 
         if ($status !="Delivered" || $status !="Canceled") {
           if($_SESSION['role'] == 'Admin'){

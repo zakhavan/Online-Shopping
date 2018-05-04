@@ -56,7 +56,7 @@ if (!empty($_POST['username']) && !empty($_POST['password'])) {
 }?>
 
 
-<form action="/CS564/login.php" method="post">
+<form action="<?php echo $site_root;?>/login.php" method="post">
   Username:<br>
   <input type="text" name="username"><br>
   Password:<br>

@@ -69,7 +69,7 @@ $stmt->bind_param("ii", $_SESSION['memberID'], $_SESSION['memberID']);
 $stmt->execute();
  $result = $stmt->get_result();
  $cartView= "<table><tr>   <th>ProductName</th>   <th>Quantity</th>  <th>Unit Price</th> <th>Total Price</th> </tr>";
-$cartView .= "<form action='/CS564/cart.php' method='post'>";
+$cartView .= "<form action='$site_root/cart.php' method='post'>";
 $total =0;
   while ($row = $result->fetch_assoc()) {
       $cartView .= "<tr><td>".$row['ProductName']."</td> ";
@@ -84,10 +84,10 @@ $total =0;
     $cartView.="</form>";
     $cartView.="</table>";
     $cartView.="Total cart value is $" .$total;
-    $cartView.= "<form action='/CS564/transaction.php' method='post'><input name='total' type='hidden' value='". $total . "' disabled/>";
+    $cartView.= "<form action='$site_root/transaction.php' method='post'><input name='total' type='hidden' value='". $total . "' disabled/>";
     if (count($addresses) == 0) {
         $cartView .= "Please add an address before placing order";
-        $cartView.=" <a href='/CS564/add_address.php'>Add a new address</a>";
+        $cartView.=" <a href='$site_root/add_address.php'>Add a new address</a>";
         $cartView .="<button type='submit' name ='checkout' value='checkout' disabled> Checkout </button>";
     } else {
         $cartView .=" Select Address :<select name='address'>";
