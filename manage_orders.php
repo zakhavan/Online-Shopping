@@ -13,7 +13,7 @@ if ($_SESSION['role'] != 'Admin') {
     header("location: profile.php?msg=$msg");
     exit;
 }
-function printOrderAction($currStatus, $pid)
+function printOrderAction($currStatus, $pid,$site_root)
 {
     $actionView = "<form action='$site_root/manage_orders.php' method='post'><input type='hidden' name='oid' value=$pid>";
     if ($currStatus =="Placed") {
@@ -72,7 +72,7 @@ if ($stmt->num_rows > 0) {
         $orderView .= "<td>".$row['Date_Time']."</td> ";
         $orderView .= "<td>".$row['TotalCost']."</td> ";
         $orderView .= "<td>".$row['Status']."</td> ";
-        $orderView .="<td>". printOrderAction($row['Status'], $row['OrderID'])."</td> </tr>";
+        $orderView .="<td>". printOrderAction($row['Status'], $row['OrderID'],$site_root)."</td> </tr>";
     }
     $orderView .= "</table>";
 } else {

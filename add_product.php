@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] =='POST') {
         $stmt->execute();
         $stmt->store_result();
         if ($stmt->num_rows > 0) {
-            $row = fetchAssocStatement($stmt)
+            $row = fetchAssocStatement($stmt);
             $desciption = $row['Description'];
             $prod_name=$row['ProductName'];
             $category=$row['ProductType'];
@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] =='POST') {
 
 $stmt = $conn->prepare("SELECT * FROM Suppliers");
 $stmt->execute();
-$supplierResult = $stmt->get_result();
+$stmt->store_result();
 
 ?>
 
@@ -107,7 +107,7 @@ $supplierResult = $stmt->get_result();
   Supplier :<select name='supplier'>
   <?php
         // $first = true;
-      while ($row = $supplierResult->fetch_assoc()) {
+      while ($row = fetchAssocStatement($stmt)) {
           echo  "<option value=".$row['SupplierID'] ." ". ($supp_id ==$row['SupplierID'] ? 'selected' : ' ') .">".$row['SupplierName']."</option>";
       }
       echo "</select>";

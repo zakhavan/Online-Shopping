@@ -23,7 +23,7 @@ if( isset(  $_GET['addrId'])){
 
     if($stmt->execute()){
         $stmt->store_result();
-        $row = fetchAssocStatement($stmt)
+        $row = fetchAssocStatement($stmt);
                 print_r($row,true);
 
         $addr = $row['Address'];
