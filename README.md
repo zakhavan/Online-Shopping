@@ -1,6 +1,6 @@
 # Online Shopping
 
-This project is an implementation of an on-line store in Mysql and PHP which is similar to the existing on-line shopping websites like Amazon and ebay. 
+This project is an implementation of an on-line store in Mysql and PHP which is similar to the existing online shopping websites like Amazon and ebay. 
 
 Each user can sign up either as a shopper or an admin. Then based on their roles they will have different access privileges. 
 Shoppers are able to select multiple items and add them to their cart to buy them later or right away. After adding the items to the cart they will be able to see the total payment. They also will be able to delete items from their cart or edit their profiles like adding a new shipping address or deleting their existing address or editing their addresses.
