@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] =='POST') {
 
 
     if (isset($_POST['checkout'])) {
-        $conn->begin_transaction(MYSQLI_TRANS_START_READ_ONLY);
+        $conn->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
 
         $stmt = $conn->prepare("SELECT p.ProductID,c.Quantity,(SELECT SUM(pp.Price * cc.Quantity) FROM Carts AS cc LEFT JOIN Products AS pp on cc.product_id=pp.ProductID WHERE cc.member_id=? GROUP BY member_id) as total FROM Carts AS c LEFT JOIN Products AS p on c.product_id=p.ProductID WHERE c.member_id=?");
         $stmt->bind_param("ii", $_SESSION['memberID'], $_SESSION['memberID']);
